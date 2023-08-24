@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Klarf.ViewModel;
 
 namespace Klarf
 {
@@ -20,9 +21,11 @@ namespace Klarf
     /// </summary>
     public partial class MainWindow : Window
     {
+        public OpenFile OpenFile = new OpenFile();
+
         public MainWindow()
         {
-            // InitializeComponent();
+            InitializeComponent();
         }
     }
 }

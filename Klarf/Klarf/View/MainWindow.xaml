@@ -1,0 +1,51 @@
+﻿<Window x:Class="Klarf.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        xmlns:local="clr-namespace:Klarf.ViewModel"
+        Title="MainWindow" Height="700" Width="900">
+
+    <Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <ItemsControl ItemsSource="{Binding Dies}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Rectangle Fill="Gray" Width="10" Height="10" 
+                        Canvas.Left="{Binding X}" 
+                        Canvas.Top="{Binding Y}"/>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Canvas/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.DataContext>
+                <local:WaferMap/>
+            </ItemsControl.DataContext>
+        </ItemsControl>
+
+        <Button Content="Open File"
+                Margin="140,10,140,280" 
+                Command="{Binding OpenFileCommand}"
+                CommandParameter="1"
+                Grid.Row="1"
+                >
+            <Button.DataContext>
+                <local:OpenFile/>
+            </Button.DataContext>
+        </Button>
+    </Grid>
+</Window>

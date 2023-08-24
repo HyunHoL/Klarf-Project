@@ -11,90 +11,66 @@ using System.Windows.Input;
 using Microsoft.Win32;
 using System.IO;
 using Klarf.Model;
+using System.Windows;
+using GalaSoft.MvvmLight.Messaging;
 
 namespace Klarf.ViewModel
-{
+{    
     public partial class OpenFile : INotifyPropertyChanged
     {
 
         #region [상수]
 
-        public string textValue, fileTimestamp, lotID, waferID;
-        public int[ , ] sampleTestPlan;
-        public double[,] defectList;
-
+        public string fileData;
+        WaferMapInfo waferMapInfo;
         #endregion
 
         #region [인터페이스]
-        public ICommand ReadFile { get; }
         public ICommand OpenFileCommand { get; }
         #endregion
 
         #region [속성]
+
         public ObservableCollection<String> FileName { get; }
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public string TextValue
+        public string FileData
         {
-            get { return textValue; }
+            get { return fileData; }
 
             set
             {
-                textValue = value;
-                OnPropertyChanged(nameof(TextValue));
+                fileData = value;
+                OnPropertyChanged(nameof(FileData));
             }
         }
+
         #endregion
 
         #region [생성자]
         public OpenFile()
         {
-            defectList = new double[453, 19];
-            FileName = new ObservableCollection<string>();
-            sampleTestPlan = new int[784, 2];
+            waferMapInfo = new WaferMapInfo();
             OpenFileCommand = new RelayCommand(LoadFile);
+
         }
 
-        
+
         #endregion
 
         #region [public Method]
 
-        public int [,] GetSampleTestPlan()
-        {
-            return sampleTestPlan;
-        }
-
-        public string GetFileTimestamp()
-        {
-            return fileTimestamp;
-        }
-
-        public string GetLotID()
-        {
-            return lotID;
-        }
-
-        public string GetWaferID()
-        {
-            return waferID;
-        }
-
-        public double [,] GetDefectList ()
-        {
-            return defectList;
-        }
 
         public void LoadFile (object parameter)
         {
 
-            FilePathData filePathData = new FilePathData();
-            string selectedFilePath = filePathData.ReadFileData();
-            string fileExtension = Path.GetExtension(selectedFilePath);
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.InitialDirectory = @"C:\Users\hhlee\OneDrive - 에이티아이\바탕 화면\Klarf 과제";
+            string selectedFilePath = "";
 
-            if (fileExtension.Equals(".001", StringComparison.OrdinalIgnoreCase))
+            if (openFileDialog.ShowDialog() == true)
             {
-                TextValue = File.ReadAllText(selectedFilePath);
+                selectedFilePath = openFileDialog.FileName;
             }
 
             else
@@ -102,17 +78,20 @@ namespace Klarf.ViewModel
                 return;
             }
 
-            filePathData.ReadSampleTestPlan(TextValue, sampleTestPlan);
-            fileTimestamp = filePathData.ReadFileTimeStamp(TextValue);
-            lotID = filePathData.ReadLotID(TextValue);
-            waferID = filePathData.ReadWaferID(TextValue);
-            filePathData.ReadDefectList(TextValue, defectList);
+            string fileExtension = Path.GetExtension(selectedFilePath);
+
+            if (fileExtension.Equals(".001", StringComparison.OrdinalIgnoreCase))
+            {
+                FileData = File.ReadAllText(selectedFilePath);
+            }
+
+            Messenger.Default.Send<string>(FileData);
+            waferMapInfo.ParalleMovementSampleTestPlan();
         }
 
         #endregion
 
         #region [private Method]
-
 
         protected void OnPropertyChanged(string propertyName)
         {
