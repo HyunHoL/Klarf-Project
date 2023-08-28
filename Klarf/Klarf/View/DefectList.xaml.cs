@@ -12,24 +12,17 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Klarf.ViewModel;
 
-namespace Klarf
+namespace Klarf.View
 {
     /// <summary>
-    /// MainWindow.xaml에 대한 상호 작용 논리
+    /// DefectList.xaml에 대한 상호 작용 논리
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class DefectList : Page
     {
-
-        public MainWindow()
+        public DefectList()
         {
             InitializeComponent();
-        }
-
-        private void WaferMapViewer_Loaded(object sender, RoutedEventArgs e)
-        {
-
         }
     }
 }

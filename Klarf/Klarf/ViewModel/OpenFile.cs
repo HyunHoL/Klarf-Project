@@ -23,6 +23,7 @@ namespace Klarf.ViewModel
 
         public string fileData;
         WaferMapInfo waferMapInfo;
+        DrawWaferMap waferMap;
         #endregion
 
         #region [인터페이스]
@@ -50,6 +51,7 @@ namespace Klarf.ViewModel
         #region [생성자]
         public OpenFile()
         {
+            waferMap = new DrawWaferMap();
             waferMapInfo = new WaferMapInfo();
             OpenFileCommand = new RelayCommand(LoadFile);
 
@@ -85,8 +87,8 @@ namespace Klarf.ViewModel
                 FileData = File.ReadAllText(selectedFilePath);
             }
 
-            Messenger.Default.Send<string>(FileData);
-            waferMapInfo.ParalleMovementSampleTestPlan();
+            List<Point> newSampleTestPlan = waferMapInfo.ParalleMovementSampleTestPlan(FileData);
+            waferMap.UpdateWaferMap(newSampleTestPlan);
         }
 
         #endregion

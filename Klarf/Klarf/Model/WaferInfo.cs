@@ -13,8 +13,8 @@ namespace Klarf.Model
     {
         #region [상수]
 
-        Point sampleTestPlanData;
-        List<Point> sampleTestPlan;
+        public Point sampleTestPlanData;
+        public List<Point> testPlan;
 
         #endregion
 
@@ -34,7 +34,7 @@ namespace Klarf.Model
 
         public WaferInfo()
         {
-            
+            testPlan = new List<Point>();
         }
 
         #endregion
@@ -102,11 +102,11 @@ namespace Klarf.Model
                 {
                     sampleTestPlanData.X = value1;
                     sampleTestPlanData.Y = value2;
-                    sampleTestPlan.Add(sampleTestPlanData);
+                    testPlan.Add(sampleTestPlanData);
                 }
             }
 
-            return sampleTestPlan;
+            return testPlan;
         }
 
 

@@ -13,7 +13,7 @@ namespace Klarf.Model
         public Point defectXY;
     }
 
-    class ReadDefectListInfo
+    class DieInfo
     {
         #region [상수]
 
@@ -34,7 +34,7 @@ namespace Klarf.Model
 
         #region [생성자]
 
-        public ReadDefectListInfo()
+        public DieInfo()
         {
             defectList = new List<DefectInfo>();
             defectInfo = new DefectInfo();

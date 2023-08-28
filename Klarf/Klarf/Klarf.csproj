@@ -91,10 +91,14 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Model\WaferMapInfo.cs" />
-    <Compile Include="Model\ReadDefectListInfo.cs" />
+    <Compile Include="Model\DieInfo.cs" />
     <Compile Include="Model\WaferInfo.cs" />
+    <Compile Include="ViewModel\DieViewModel.cs" />
     <Compile Include="ViewModel\RelayCommand.cs" />
-    <Compile Include="ViewModel\WaferMap.cs" />
+    <Compile Include="ViewModel\DrawWaferMap.cs" />
+    <Compile Include="View\FileListViewer.xaml.cs">
+      <DependentUpon>FileListViewer.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
@@ -103,7 +107,18 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ViewModel\OpenFile.cs" />
+    <Compile Include="View\WaferMapViewer.xaml.cs">
+      <DependentUpon>WaferMapViewer.xaml</DependentUpon>
+    </Compile>
+    <Page Include="View\FileListViewer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\MainWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\WaferMapViewer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

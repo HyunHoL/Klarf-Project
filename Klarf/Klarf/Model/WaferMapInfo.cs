@@ -12,10 +12,9 @@ namespace Klarf.Model
     {
         #region [상수]
         WaferInfo waferInfo;
-        ReadDefectListInfo readDefectListInfo;
+        DieInfo readDefectListInfo;
         public List<Point> newSampleTestPlan;
         public List<Point> sampleTestPlan;
-        public string fileValue;
 
         #endregion
 
@@ -28,9 +27,10 @@ namespace Klarf.Model
         #region [생성자]
         public WaferMapInfo()
         {
+            newSampleTestPlan = new List<Point>();
             waferInfo = new WaferInfo();
-            readDefectListInfo = new ReadDefectListInfo();
-            Messenger.Default.Register<string>(this, LoadFileData);
+            readDefectListInfo = new DieInfo();
+
         }
 
 
@@ -38,10 +38,10 @@ namespace Klarf.Model
 
         #region [public Method]
 
-        public List<Point> ParalleMovementSampleTestPlan()
+        public List<Point> ParalleMovementSampleTestPlan(string textValue)
         {
 
-            sampleTestPlan = waferInfo.ReadSampleTestPlan(fileValue);
+            sampleTestPlan = waferInfo.ReadSampleTestPlan(textValue);
             Point saveValue = new Point();
 
             for (int i = 0; i < sampleTestPlan.Count; i++)
@@ -51,14 +51,14 @@ namespace Klarf.Model
                 saveValue.Y = Math.Abs(sampleTestPlan[i].Y - 24);
                 newSampleTestPlan.Add(saveValue);
             }
-            Messenger.Default.Send<List<Point>>(newSampleTestPlan);
+
             return newSampleTestPlan;
         }
 
-        public int[,] ParalleMovementDefectXY ()
+        public int[,] ParalleMovementDefectXY (string textValue)
         {
             int[,] defectXY;
-            defectXY = readDefectListInfo.ReadDefectXY(fileValue);
+            defectXY = readDefectListInfo.ReadDefectXY(textValue);
             int[,] newDefectXY = new int[defectXY.GetLength(0), defectXY.GetLength(1)];
 
             for (int i = 0; i < defectXY.GetLength(0); i++)
@@ -73,11 +73,6 @@ namespace Klarf.Model
         #endregion
 
         #region [private Method]
-
-        private void LoadFileData(string fileData)
-        {
-            fileValue = fileData;
-        }
 
 
         #endregion
